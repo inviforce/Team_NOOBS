@@ -1,71 +1,139 @@
-# 📸 Kuku FM Thumbnail Generation — Team Noobs
+# ThumbnailGen: AI‑Driven Podcast Thumbnail Generation
 
-Welcome to the official repository submission by **Team Noobs** for the **Kuku FM Thumbnail Generation Problem**.
-
-## 🚀 Project Overview
-
-This project presents a robust and automated pipeline for generating high-quality thumbnails using a combination of state-of-the-art AI tools:
-
-- **Stable Diffusion 3.5** for image generation  
-- **OpenAI GPT (via API)** for prompt generation and refinement  
-- **ImageReward** for image quality evaluation and ranking
-
-Our goal is to generate visually compelling thumbnails that are not only stylistically diverse but also highly relevant to the given context.
+**Project:** KukuFM Hackathon  
+**Team:** Your Team Name  
+**Date:** YYYY‑MM‑DD  
 
 ---
 
-## 🧠 Key Idea
+## 🚀 Overview
 
-The pipeline follows these major steps:
+**ThumbnailGen** is an end‑to‑end pipeline that transforms podcast episode keynotes into eye‑catching thumbnails using:
 
-1. **Prompt Generation (GPT API)**  
-   Using OpenAI's GPT model, we generate **multiple variations** of prompts from a base concept. These prompts differ in:
-   - Style
-   - Coherence
-   - Color palette
-   - Artistic tone
-
-2. **Image Generation (Stable Diffusion 3.5)**  
-   Each prompt is fed into Stable Diffusion to generate **multiple thumbnail candidates** per prompt.
-
-3. **Image Ranking (ImageReward)**  
-   All generated images are ranked using **ImageReward**, a model that scores images based on visual appeal and prompt alignment.  
-   The **top-ranked image** is selected for the next stage.
-
-4. **Prompt Refinement (GPT API Feedback Loop)**  
-   The selected image is passed back into GPT via the OpenAI API to evaluate **inconsistencies or missing elements** in relation to the prompt.  
-   GPT suggests improvements or final touches, which are used to **regenerate a refined prompt** for an even better result.
+1. **GPT‑4O** for prompt engineering  
+2. **Stable Diffusion 3.5 Large** for high‑quality image generation  
+3. **Pillow** for optional title overlay  
 
 ---
 
-## 🛠️ Tech Stack
+## 📦 Features
 
-- 🧠 **OpenAI GPT API** — for intelligent prompt crafting and feedback
-- 🎨 **Stable Diffusion 3.5** — for generating high-quality, diverse images
-- 📊 **ImageReward** — for evaluating and ranking image quality
-- 🐍 **Python** — glue code and orchestration logic
+- **Automated Prompt Generation**  
+  - Generates 5 positive & 5 negative prompts under token limits  
+  - Ensures title is integrated into each positive prompt  
 
----
+- **High‑Resolution Thumbnails**  
+  - Uses SD3.5 to produce 512×512 images with 8K‑style detail  
+  - Configurable inference steps & guidance scale  
 
-## ✅ Features
-
-- Multi-step image generation with **style diversity**
-- Automated **prompt quality control**
-- GPT-powered **semantic feedback loop**
-- Visual quality ranking via **ImageReward**
-- Extensible and modular pipeline
+- **Fallback & Robustness**  
+  - Gracefully falls back to original keynotes if prompt regeneration fails  
+  - Supports gated & public Stable Diffusion models  
 
 ---
 
-## 📈 Future Work
+## ⚙️ Setup
 
-- Fine-tune the prompt-to-image pipeline based on specific content types (e.g., audiobooks, genres)
-- Add support for A/B testing of thumbnails
-- Integrate real-time feedback from Kuku FM content teams
+1. **Clone Repo**  
+   ```bash
+   git clone https://github.com/your‑org/thumbnailgen.git
+   cd thumbnailgen
+   ```
+2. **Install dependencies**  
+   ```bash
+    pip install \
+        diffusers transformers accelerate safetensors \
+        pillow huggingface_hub openai
+
+   ```
+3. **Authenticate**  
+   ```bash
+   git clone https://github.com/your‑org/thumbnailgen.git
+   cd thumbnailgen
+   ```
+    ### Huggingface
+    from huggingface_hub import notebook_login
+    notebook_login()
+
+    ### OpenAI
+    export OPENAI_API_KEY="sk‑..."
+
+## 📝 Usage
+
+### Prepare Keynotes
+
+Create a list of tuples:
+
+```python
+    container = [
+    ("Episode keynote text…", "/path/to/cover.jpg", "Episode Title"),
+    # …
+    ]
+```
+
+### Regenrate prompts
+
+```python
+    positives, negatives = gpt_generating_prompts(base_prompt, image_title)
+```
+
+
+### Generate Thumbnails
+
+```python
+    img = generate_thumbnail(
+    prompt=positives[0],
+    neg_prompt=negatives[0],
+    title=image_title,
+    steps=25
+    )
+    img.save("thumbnail.png")
+
+```
+
+### Batch Processing
+
+```python
+    for keynote, img_path, title in container:
+    try:
+        pos, neg = regenerate_prompt(img_path, keynote)
+        if not pos:
+            raise ValueError
+    except:
+        pos, neg = [keynote], [""]
+    thumb = generate_thumbnail(pos[0], neg[0], title)
+    thumb.save(f"{title}_thumb.png")
+
+
+```
+
+## 📂 Notebook
+
+See **`ThumbnailGen_Notebook.ipynb`** for a runnable Google Colab notebook with full code, examples, and a visual gallery.
 
 ---
 
-## 📬 Contact
+## 🎨 Examples
 
-For queries or collaboration, reach out to **Team Noobs**  
-We're happy to share insights and explore improvements together!
+| Keynote Excerpt                                 | Generated Thumbnail Preview         |
+|-------------------------------------------------|-------------------------------------|
+| “In the dark underbelly of New York City…”      | ![preview1](examples/previ ew1.png)  |
+| “A tale of power, betrayal, and redemption…”    | ![preview2](examples/preview2.png)  |
+
+---
+
+## 🔮 Future Work
+
+- Batch & Parallel Processing  
+- Interactive UI / Web App  
+- A/B Testing & Analytics  
+- Support for Additional Styles & Aspect Ratios  
+
+---
+
+## 🤝 Contributing
+
+1. Fork this repo  
+2. Create your feature branch  
+   ```bash
+   git checkout -b feat/YourFeature
