@@ -20,8 +20,12 @@
 
 - **Automated Prompt Generation**  
   - Generates 5 positive & 5 negative prompts under token limits  
-  - Ensures title is integrated into each positive prompt  
+  - Ensures title is integrated into each positive prompt
 
+- **Image Quality Ranking**  
+  - Uses **ImageReward** model to rank multiple generated thumbnails  
+  - Automatically selects the top‑scoring image for use
+  
 - **High‑Resolution Thumbnails**  
   - Uses SD3.5 to produce 512×512 images with 8K‑style detail  
   - Configurable inference steps & guidance scale  
@@ -43,7 +47,8 @@
    ```bash
     pip install \
         diffusers transformers accelerate safetensors \
-        pillow huggingface_hub openai
+        pillow huggingface_hub openai\
+        image-reward
 
    ```
 3. **Authenticate**  
