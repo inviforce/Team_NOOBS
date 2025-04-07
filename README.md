@@ -12,7 +12,7 @@
 
 1. **GPT‑4O** for prompt engineering  
 2. **Stable Diffusion 3.5 Large** for high‑quality image generation  
-3. **Pillow** for optional title overlay  
+3. **Image Reward** for ranking images
 
 ---
 
