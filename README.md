@@ -1,8 +1,8 @@
 # ThumbnailGen: AI‑Driven Podcast Thumbnail Generation
 
 **Project:** KukuFM Hackathon  
-**Team:** Your Team Name  
-**Date:** YYYY‑MM‑DD  
+**Team:** NOOBS  
+**Date:** 2025-04-08
 
 ---
 
